@@ -13,9 +13,11 @@ var (
 	POSTGRES_PASS,
 	POSTGRES_DB,
 	REDIS_HOST,
-	REDIS_PASS string
+	REDIS_PASS,
+	SECRET_KEY string
 
-	REDIS_DB int
+	REDIS_DB,
+	REDIS_LIFESPAN int
 
 	REDIS_DISABLE_ID bool
 )
@@ -37,4 +39,8 @@ func InitConfig() {
 	REDIS_DB = utils.GetEnvOrDefault("REDIS_DB", 0)
 
 	REDIS_DISABLE_ID = utils.GetEnvOrDefault("REDIS_DISABLE_ID", false)
+
+	SECRET_KEY = utils.GetEnvOrDefault("SECRET_KEY", "")
+
+	REDIS_LIFESPAN = utils.GetEnvOrDefault("REDIS_LIFESPAN", 6000)
 }
