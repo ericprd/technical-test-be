@@ -9,6 +9,7 @@ import (
 	"github.com/ericprd/technical-test/internal/api"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 	"go.uber.org/fx"
 )
 
@@ -21,16 +22,23 @@ func init() {
 func run(
 	ls fx.Lifecycle,
 	router chi.Router,
+	rdb *redis.Client,
 ) {
 	ls.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			log.Print("application started")
+
+			_, err := rdb.Ping(ctx).Result()
+			if err != nil {
+				log.Fatalf("Could not connect to Redis: %v", err)
+			}
 
 			config.NewRouter(router)
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
 			log.Print("application stopped")
+			rdb.Close()
 			return nil
 		},
 	})
