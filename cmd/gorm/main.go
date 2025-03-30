@@ -6,25 +6,26 @@ import (
 	"github.com/ericprd/technical-test/config"
 	"github.com/ericprd/technical-test/database"
 	"github.com/joho/godotenv"
-	"go.uber.org/fx"
 )
 
 func init() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("Error loading .env file, continuing without it")
 	}
+
+	config.InitConfig()
 }
 
 func main() {
-	fx.New(
-		config.Module,
-		database.Module,
-		fx.Invoke(func(
-			db *database.DB,
-		) {
-			if err := db.Migrate(); err != nil {
-				log.Fatalf("failed to migrate database: %s", err)
-			}
-		}),
-	).Run()
+	db, err := database.New()
+
+	if err != nil {
+		log.Fatalf("failed to create db instance: %v", err)
+	}
+
+	if err := db.Migrate(); err != nil {
+		log.Fatalf("failed to migrate database: %v", err)
+	}
+
+	log.Print("success migrate db")
 }

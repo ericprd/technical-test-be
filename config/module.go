@@ -7,5 +7,5 @@ var Module = fx.Module(
 	fx.Provide(
 		initRouter,
 	),
-	fx.Invoke(initConfig),
+	fx.Invoke(InitConfig),
 )

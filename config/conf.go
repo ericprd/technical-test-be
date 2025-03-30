@@ -10,7 +10,7 @@ var (
 	POSTGRES_DB string
 )
 
-func initConfig() {
+func InitConfig() {
 	POSTGRES_HOST = utils.GetEnvOrDefault("POSTGRES_HOST", "localhost")
 	POSTGRES_PORT = utils.GetEnvOrDefault("POSTGRES_PORT", "5432")
 	POSTGRES_USER = utils.GetEnvOrDefault("POSTGRES_USER", "")

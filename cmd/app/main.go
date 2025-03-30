@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/ericprd/technical-test/config"
+	"github.com/ericprd/technical-test/database"
+	"github.com/ericprd/technical-test/internal/api"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"go.uber.org/fx"
@@ -37,6 +39,8 @@ func run(
 func main() {
 	app := fx.New(
 		config.Module,
+		database.Module,
+		api.Module,
 		fx.Invoke(run),
 	)
 
@@ -44,7 +48,6 @@ func main() {
 		log.Fatal("Error starting app:", err)
 	}
 
-	// Wait for the app to stop gracefully
 	if err := app.Stop(context.Background()); err != nil {
 		log.Fatal("Error stopping app:", err)
 	}
