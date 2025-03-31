@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/ericprd/technical-test/config"
 	"gorm.io/driver/postgres"
@@ -24,8 +23,6 @@ func New() (*DB, error) {
 		return nil, fmt.Errorf("DATABASE_URL environment is not set")
 	}
 
-	log.Print(dsn)
-
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -38,5 +35,7 @@ func New() (*DB, error) {
 func (db *DB) Migrate() error {
 	return db.AutoMigrate(
 		&User{},
+		&Wallet{},
+		&BankAccount{},
 	)
 }
