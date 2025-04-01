@@ -1,9 +1,15 @@
 package authutil
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"fmt"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 func HashPassword(password string) (string, error) {
-	// Hashing the password with a cost of 14 (default)
+	if password == "" {
+		return "", fmt.Errorf("password must not be empty")
+	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err

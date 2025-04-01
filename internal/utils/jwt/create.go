@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func Generate(data AuthToken) (string, error) {
+func CreateJWT(data AuthToken) (string, error) {
 	now := timeutil.UTCNow()
 	claims := jwt.MapClaims{
 		string(USERNAME):   data.Username,
