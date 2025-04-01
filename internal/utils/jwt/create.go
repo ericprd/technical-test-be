@@ -14,7 +14,6 @@ func CreateJWT(data AuthToken) (string, error) {
 		string(USERNAME):   data.Username,
 		string(ROLE):       data.Role,
 		string(SESSION_ID): data.SessionID,
-		string(ID):         data.ID,
 		string(EXPIRED_AT): now.Add(time.Minute * time.Duration(config.REDIS_LIFESPAN)).Unix(),
 	}
 

@@ -19,7 +19,7 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 	}{
 		{
 			name:   "Generate and Verify Valid JWT",
-			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin", ID: "12345"},
+			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin"},
 			exec: func(authToken AuthToken) error {
 				config.REDIS_LIFESPAN = 6000
 				tokenString, err := CreateJWT(authToken)
@@ -42,16 +42,13 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 				if claims[string(ROLE)] != authToken.Role {
 					return fmt.Errorf("expected role %v, got %v", authToken.Role, claims[string(ROLE)])
 				}
-				if claims[string(ID)] != authToken.ID {
-					return fmt.Errorf("expected ID %v, got %v", authToken.ID, claims[string(ID)])
-				}
 
 				return nil
 			},
 		},
 		{
 			name:   "Verify Expired JWT",
-			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin", ID: "12345"},
+			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin"},
 			exec: func(authToken AuthToken) error {
 				config.REDIS_LIFESPAN = 0
 				tokenString, err := CreateJWT(authToken)
@@ -69,7 +66,7 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 		},
 		{
 			name:   "Verify Invalid JWT Format",
-			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin", ID: "12345"},
+			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin"},
 			exec: func(authToken AuthToken) error {
 				tokenString := "invalidtoken"
 
@@ -83,7 +80,7 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 		},
 		{
 			name:   "Verify JWT with Incorrect Secret",
-			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin", ID: "12345"},
+			params: AuthToken{Username: "user1", SessionID: "session123", Role: "admin"},
 			exec: func(authToken AuthToken) error {
 				tokenString, err := CreateJWT(authToken)
 				if err != nil {
@@ -91,7 +88,7 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 				}
 
 				incorrectSigningKey := []byte("incorrect_secret")
-				_, err = jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+				_, err = jwt.Parse(tokenString, func(token *jwt.Token) (any, error) {
 					return incorrectSigningKey, nil
 				})
 

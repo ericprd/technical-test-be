@@ -6,7 +6,9 @@ import (
 
 	"github.com/ericprd/technical-test/config"
 	"github.com/ericprd/technical-test/database"
+	"github.com/ericprd/technical-test/internal/accessor"
 	"github.com/ericprd/technical-test/internal/api"
+	"github.com/ericprd/technical-test/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
@@ -49,6 +51,8 @@ func main() {
 		config.Module,
 		database.Module,
 		api.Module,
+		accessor.Module,
+		service.Module,
 		fx.Invoke(run),
 	)
 

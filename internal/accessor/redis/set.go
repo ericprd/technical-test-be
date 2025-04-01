@@ -8,7 +8,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-func (r *impl) Set(ctx context.Context, data interface{}, key string) error {
+func (r *impl) Set(ctx context.Context, data any, key string) error {
 	_, err := r.RDB.Get(ctx, key).Result()
 
 	if err != redis.Nil {

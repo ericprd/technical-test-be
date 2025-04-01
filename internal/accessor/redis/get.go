@@ -7,7 +7,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-func (r *impl) Get(ctx context.Context, key string) (interface{}, error) {
+func (r *impl) Get(ctx context.Context, key string) (any, error) {
 	val, err := r.RDB.Get(ctx, key).Result()
 
 	switch {

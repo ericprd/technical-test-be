@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func SuccessResponse(w http.ResponseWriter, message string, data interface{}, statusCode int) {
+func SuccessResponse(w http.ResponseWriter, message string, data any, statusCode int) {
 	response := Response{
 		Message: message,
 		Data:    data,

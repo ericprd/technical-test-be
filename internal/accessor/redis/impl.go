@@ -11,8 +11,8 @@ type impl struct {
 }
 
 type Redis interface {
-	Set(ctx context.Context, data interface{}, key string) error
-	Get(ctx context.Context, key string) (interface{}, error)
+	Set(ctx context.Context, data any, key string) error
+	Get(ctx context.Context, key string) (any, error)
 	Delete(ctx context.Context, key string) error
 }
 
