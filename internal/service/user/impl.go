@@ -5,12 +5,14 @@ import (
 
 	redisrepo "github.com/ericprd/technical-test/internal/accessor/redis"
 	userrepo "github.com/ericprd/technical-test/internal/accessor/user"
+	walletrepo "github.com/ericprd/technical-test/internal/accessor/wallet"
 	userdomain "github.com/ericprd/technical-test/internal/domain/user"
 )
 
 type impl struct {
-	rdb      redisrepo.Redis
-	userRepo userrepo.User
+	rdb        redisrepo.Redis
+	userRepo   userrepo.User
+	walletRepo walletrepo.Wallet
 }
 
 type User interface {
@@ -20,6 +22,7 @@ type User interface {
 func New(
 	rdb redisrepo.Redis,
 	userRepo userrepo.User,
+	walletRepo walletrepo.Wallet,
 ) User {
-	return &impl{rdb, userRepo}
+	return &impl{rdb, userRepo, walletRepo}
 }

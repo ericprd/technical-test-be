@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	userdomain "github.com/ericprd/technical-test/internal/domain/user"
+	walletdomain "github.com/ericprd/technical-test/internal/domain/wallet"
+	authutil "github.com/ericprd/technical-test/internal/utils/auth"
 	jwtutil "github.com/ericprd/technical-test/internal/utils/jwt"
 	"github.com/google/uuid"
 )
@@ -13,8 +15,22 @@ func (i *impl) Register(ctx context.Context, spec userdomain.Request) (string, e
 	spec.ID = uuid.NewString()
 	sessionID := uuid.NewString()
 
+	hashedPass, err := authutil.HashPassword(spec.Password)
+	if err != nil {
+		return "", fmt.Errorf("failed hashing password: %v", err)
+	}
+
+	spec.Password = hashedPass
+
 	if err := i.userRepo.Register(spec); err != nil {
 		return "", fmt.Errorf("register user failed: %v", err)
+	}
+
+	if err := i.walletRepo.Register(walletdomain.Request{
+		ID:     uuid.NewString(),
+		UserID: spec.ID,
+	}); err != nil {
+		return "", fmt.Errorf("failed to create user's wallet: %v", err)
 	}
 
 	token, err := jwtutil.CreateJWT(jwtutil.AuthToken{
