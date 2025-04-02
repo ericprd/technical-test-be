@@ -10,7 +10,8 @@ type impl struct {
 }
 
 type User interface {
-	Register(spec userdomain.Request) error
+	Register(spec userdomain.RegisterSpec) error
+	Login(username string) (userdomain.Profile, error)
 }
 
 func New(db *database.DB) User {

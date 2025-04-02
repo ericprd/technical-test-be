@@ -10,7 +10,7 @@ type impl struct {
 }
 
 type Wallet interface {
-	Register(spec walletdomain.Request) error
+	Register(spec walletdomain.Spec) error
 }
 
 func New(db *database.DB) Wallet {

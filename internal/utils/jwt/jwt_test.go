@@ -2,7 +2,6 @@ package jwtutil
 
 import (
 	"fmt"
-	"log"
 	"testing"
 
 	"github.com/ericprd/technical-test/config"
@@ -28,7 +27,7 @@ func TestJWTGenerationAndVerification(t *testing.T) {
 				}
 
 				claims, err := VerifyJWT(tokenString)
-				log.Print(claims)
+
 				if err != nil {
 					return fmt.Errorf("VerifyJWT returned error: %v", err)
 				}

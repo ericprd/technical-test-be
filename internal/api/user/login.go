@@ -11,15 +11,15 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func Register(
+func Login(
 	router chi.Router,
 	validate *validator.Validate,
 	userSvc usersvc.User,
 ) {
-	router.Post("/user/register", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/user/login", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
-		var spec userdomain.RegisterSpec
+		var spec userdomain.LoginSpec
 
 		if err := request.GetRequestBody(r, &spec); err != nil {
 			response.ErrorResponse(w, err.Error(), "UNMARSHAL_BODY", http.StatusBadRequest)
@@ -31,9 +31,9 @@ func Register(
 			return
 		}
 
-		token, err := userSvc.Register(ctx, spec)
+		token, err := userSvc.Login(ctx, spec)
 		if err != nil {
-			response.ErrorResponse(w, err.Error(), "REGISTER_USER", http.StatusBadRequest)
+			response.ErrorResponse(w, err.Error(), "LOGIN_USER", http.StatusBadRequest)
 			return
 		}
 

@@ -43,7 +43,7 @@ func TestHashAndComparePassword(t *testing.T) {
 					return fmt.Errorf("HashPassword() returned error: %v", err)
 				}
 
-				if ComparePassword(hashedPassword, incorrectPassword) {
+				if err := ComparePassword(hashedPassword, incorrectPassword); err != nil {
 					return fmt.Errorf("expected false, got true for incorrect password")
 				}
 
@@ -61,7 +61,7 @@ func TestHashAndComparePassword(t *testing.T) {
 					return fmt.Errorf("HashPassword() returned error: %v", err)
 				}
 
-				if ComparePassword(hashedPassword, incorrectPassword) {
+				if err := ComparePassword(hashedPassword, incorrectPassword); err != nil {
 					return fmt.Errorf("expected false, got true for empty password")
 				}
 
@@ -79,7 +79,7 @@ func TestHashAndComparePassword(t *testing.T) {
 					return fmt.Errorf("HashPassword() returned error: %v", err)
 				}
 
-				if ComparePassword(hashedPassword, incorrectPassword) {
+				if err := ComparePassword(hashedPassword, incorrectPassword); err != nil {
 					return fmt.Errorf("expected false, got true for empty stored password")
 				}
 
