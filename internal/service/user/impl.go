@@ -18,6 +18,7 @@ type impl struct {
 type User interface {
 	Register(ctx context.Context, spec userdomain.RegisterSpec) (string, error)
 	Login(ctx context.Context, spec userdomain.LoginSpec) (string, error)
+	Logout(ctx context.Context, token string) error
 }
 
 func New(

@@ -6,18 +6,9 @@ import (
 	"strings"
 )
 
-type Header struct {
-	Request *http.Request
-	Name    string
-}
+func GetTokenHeader(r *http.Request) (string, error) {
 
-func GetTokenHeader(r *http.Request, header string) (string, error) {
-	h := Header{
-		Request: r,
-		Name:    header,
-	}
-
-	token := h.getTokenFromHeader()
+	token := getTokenFromHeader(r)
 
 	if token == "" {
 		return "", fmt.Errorf("token not found")
@@ -26,8 +17,8 @@ func GetTokenHeader(r *http.Request, header string) (string, error) {
 	return token, nil
 }
 
-func (h *Header) getTokenFromHeader() string {
-	session := h.Request.Header.Get(h.Name)
+func getTokenFromHeader(r *http.Request) string {
+	session := r.Header.Get("Authorization")
 	arr := strings.Split(session, " ")
 
 	if len(arr) != 2 || strings.ToUpper(arr[0]) != "BEARER" {

@@ -1,7 +1,6 @@
 package middlewaresvc
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/ericprd/technical-test/internal/utils/response"
@@ -14,7 +13,7 @@ func (i *impl) Authorize() Handler {
 				response.ErrorResponse(w, err.Error(), "UNAUTHORIZE", http.StatusUnauthorized)
 				return
 			}
-			log.Print("lewat sini")
+
 			h.ServeHTTP(w, r.WithContext(r.Context()))
 		})
 	}

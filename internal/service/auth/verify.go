@@ -12,7 +12,7 @@ import (
 func (i *impl) Verify(r *http.Request) error {
 	ctx := r.Context()
 
-	token, err := authutil.GetTokenHeader(r, "Authorization")
+	token, err := authutil.GetTokenHeader(r)
 	if err != nil {
 		return fmt.Errorf("failed to get token: %v", err)
 	}
