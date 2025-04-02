@@ -7,7 +7,6 @@ import (
 	userdomain "github.com/ericprd/technical-test/internal/domain/user"
 	authutil "github.com/ericprd/technical-test/internal/utils/auth"
 	jwtutil "github.com/ericprd/technical-test/internal/utils/jwt"
-	"github.com/google/uuid"
 )
 
 func (i *impl) Login(ctx context.Context, spec userdomain.LoginSpec) (string, error) {
@@ -20,11 +19,9 @@ func (i *impl) Login(ctx context.Context, spec userdomain.LoginSpec) (string, er
 		return "", fmt.Errorf("wrong password: %v", err)
 	}
 
-	sessionID := uuid.NewString()
-
 	token, err := jwtutil.CreateJWT(jwtutil.AuthToken{
 		Username:  spec.Username,
-		SessionID: sessionID,
+		SessionID: user.ID,
 		Role:      "user",
 	})
 
@@ -32,7 +29,7 @@ func (i *impl) Login(ctx context.Context, spec userdomain.LoginSpec) (string, er
 		return "", fmt.Errorf("failed to generate token: %v", err)
 	}
 
-	key := fmt.Sprintf("user-%s", sessionID)
+	key := fmt.Sprintf("user-%s", user.ID)
 
 	if err := i.rdb.Set(ctx, token, key); err != nil {
 		return "", fmt.Errorf("failed to cache token: %v", err)

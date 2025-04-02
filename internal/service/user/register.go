@@ -13,7 +13,6 @@ import (
 
 func (i *impl) Register(ctx context.Context, spec userdomain.RegisterSpec) (string, error) {
 	spec.ID = uuid.NewString()
-	sessionID := uuid.NewString()
 
 	hashedPass, err := authutil.HashPassword(spec.Password)
 	if err != nil {
@@ -35,7 +34,7 @@ func (i *impl) Register(ctx context.Context, spec userdomain.RegisterSpec) (stri
 
 	token, err := jwtutil.CreateJWT(jwtutil.AuthToken{
 		Username:  spec.Username,
-		SessionID: sessionID,
+		SessionID: spec.ID,
 		Role:      "user",
 	})
 
@@ -43,7 +42,7 @@ func (i *impl) Register(ctx context.Context, spec userdomain.RegisterSpec) (stri
 		return "", fmt.Errorf("failed to generate token: %v", err)
 	}
 
-	key := fmt.Sprintf("user-%s", sessionID)
+	key := fmt.Sprintf("user-%s", spec.ID)
 
 	if err := i.rdb.Set(ctx, token, key); err != nil {
 		return "", fmt.Errorf("failed to cache token: %v", err)
