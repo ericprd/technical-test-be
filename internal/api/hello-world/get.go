@@ -3,7 +3,7 @@ package helloworld
 import (
 	"net/http"
 
-	"github.com/ericprd/technical-test/internal/service/middlewaresvc"
+	middlewaresvc "github.com/ericprd/technical-test/internal/service/middleware"
 	"github.com/ericprd/technical-test/internal/utils/response"
 	"github.com/go-chi/chi/v5"
 )

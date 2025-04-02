@@ -3,7 +3,7 @@ package userapi
 import (
 	"net/http"
 
-	"github.com/ericprd/technical-test/internal/service/middlewaresvc"
+	middlewaresvc "github.com/ericprd/technical-test/internal/service/middleware"
 	usersvc "github.com/ericprd/technical-test/internal/service/user"
 	authutil "github.com/ericprd/technical-test/internal/utils/auth"
 	"github.com/ericprd/technical-test/internal/utils/response"

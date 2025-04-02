@@ -6,7 +6,7 @@
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "program": "${workspaceFolder}/cmd/gorm/",
+            "program": "${workspaceFolder}/cmd/app/",
             "dlvLoadConfig":{
                 "followPointers": true,
                 "maxVariableRecurse": 1,
