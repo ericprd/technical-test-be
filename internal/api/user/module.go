@@ -7,4 +7,5 @@ var Module = fx.Module("api-user", fx.Invoke(
 	Login,
 	Logout,
 	CreateBank,
+	GetUsers,
 ))

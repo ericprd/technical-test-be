@@ -7,7 +7,7 @@ type Profile struct {
 	FullName  string    `json:"full_name"`
 	Username  string    `json:"username"`
 	Email     *string   `json:"email"`
-	Password  string    `json:"password"`
+	Password  string    `json:"password,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
