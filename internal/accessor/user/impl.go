@@ -13,6 +13,7 @@ type User interface {
 	Register(spec userdomain.RegisterSpec) error
 	Login(username string) (userdomain.Profile, error)
 	GetAllUser() ([]userdomain.Profile, error)
+	GetUser(id string) (*userdomain.Profile, error)
 }
 
 func New(db *database.DB) User {

@@ -12,6 +12,6 @@ type Profile struct {
 	Email    *string `json:"email"`
 	Password string  `json:"password,omitempty"`
 
-	Wallet walletdomain.Wallet    `json:"wallet" gorm:"foreignKey:UserID"`
-	Bank   bankdomain.BankAccount `json:"bank" gorm:"foreignKey:UserID"`
+	Wallet *walletdomain.Wallet    `json:"wallet" gorm:"foreignKey:UserID"`
+	Bank   *bankdomain.BankAccount `json:"bank" gorm:"foreignKey:UserID"`
 }

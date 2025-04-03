@@ -20,6 +20,7 @@ type User interface {
 	Login(ctx context.Context, spec userdomain.LoginSpec) (string, error)
 	Logout(ctx context.Context, token string) error
 	GetAllUser() ([]userdomain.Profile, error)
+	GetUser(id string) (*userdomain.Profile, error)
 }
 
 func New(
