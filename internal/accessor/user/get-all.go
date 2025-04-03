@@ -8,7 +8,12 @@ import (
 func (i *impl) GetAllUser() ([]userdomain.Profile, error) {
 	var users []userdomain.Profile
 
-	if err := i.db.Model(&database.User{}).Omit("Password").Find(&users).Error; err != nil {
+	if err := i.db.
+		Model(&database.User{}).
+		Preload("Wallet").
+		Preload("Bank").
+		Omit("Password").
+		Find(&users).Error; err != nil {
 		return nil, err
 	}
 
