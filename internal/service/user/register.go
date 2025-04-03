@@ -25,7 +25,7 @@ func (i *impl) Register(ctx context.Context, spec userdomain.RegisterSpec) (stri
 		return "", fmt.Errorf("register user failed: %v", err)
 	}
 
-	if err := i.walletRepo.Register(walletdomain.Spec{
+	if err := i.walletRepo.Register(walletdomain.Wallet{
 		ID:     uuid.NewString(),
 		UserID: spec.ID,
 	}); err != nil {

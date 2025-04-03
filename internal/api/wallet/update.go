@@ -1,11 +1,11 @@
-package userapi
+package walletapi
 
 import (
 	"net/http"
 
-	bankdomain "github.com/ericprd/technical-test/internal/domain/bank"
-	banksvc "github.com/ericprd/technical-test/internal/service/bank"
+	walletdomain "github.com/ericprd/technical-test/internal/domain/wallet"
 	middlewaresvc "github.com/ericprd/technical-test/internal/service/middleware"
+	walletsvc "github.com/ericprd/technical-test/internal/service/wallet"
 	authutil "github.com/ericprd/technical-test/internal/utils/auth"
 	jwtutil "github.com/ericprd/technical-test/internal/utils/jwt"
 	"github.com/ericprd/technical-test/internal/utils/request"
@@ -14,13 +14,13 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func CreateBank(
+func Update(
 	router chi.Router,
 	validate *validator.Validate,
-	bankSvc banksvc.Bank,
-	middleware middlewaresvc.Middleware,
+	walletSvc walletsvc.Wallet,
+	middlewareSvc middlewaresvc.Middleware,
 ) {
-	router.With(middleware.Authorize()).Post("/user/create-bank", func(w http.ResponseWriter, r *http.Request) {
+	router.With(middlewareSvc.Authorize()).Post("/wallet/update", func(w http.ResponseWriter, r *http.Request) {
 		token, err := authutil.GetTokenHeader(r)
 		if err != nil {
 			response.ErrorResponse(w, err.Error(), "UNAUTHORIZED", http.StatusUnauthorized)
@@ -39,7 +39,7 @@ func CreateBank(
 			return
 		}
 
-		var spec bankdomain.RegisterSpec
+		var spec walletdomain.UpdateSpec
 
 		if err := request.GetRequestBody(r, &spec); err != nil {
 			response.ErrorResponse(w, err.Error(), "UNMARSHAL_BODY", http.StatusBadRequest)
@@ -53,13 +53,13 @@ func CreateBank(
 
 		spec.UserID = sessionID.(string)
 
-		if err := bankSvc.Register(spec); err != nil {
-			response.ErrorResponse(w, err.Error(), "BAD_REQUEST", http.StatusBadRequest)
+		if err := walletSvc.Update(spec); err != nil {
+			response.ErrorResponse(w, err.Error(), "UPDATE_BALANCE", http.StatusBadRequest)
 			return
 		}
 
 		response.SuccessResponse(w, "SUCCESS", map[string]string{
-			"message": "user's bank created succesfully",
+			"message": "wallet balance updated succesfully",
 		}, http.StatusOK)
 	})
 }

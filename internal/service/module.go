@@ -5,6 +5,7 @@ import (
 	banksvc "github.com/ericprd/technical-test/internal/service/bank"
 	middlewaresvc "github.com/ericprd/technical-test/internal/service/middleware"
 	usersvc "github.com/ericprd/technical-test/internal/service/user"
+	walletsvc "github.com/ericprd/technical-test/internal/service/wallet"
 	"go.uber.org/fx"
 )
 
@@ -13,4 +14,5 @@ var Module = fx.Module("services", fx.Provide(
 	authsvc.New,
 	middlewaresvc.New,
 	banksvc.New,
+	walletsvc.New,
 ))
