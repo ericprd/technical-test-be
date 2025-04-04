@@ -25,6 +25,15 @@ func New() (*DB, error) {
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
+	// db.Logger = logger.New(
+	// 	log.New(os.Stdout, "\r\n", log.LstdFlags),
+	// 	logger.Config{
+	// 		SlowThreshold: time.Second,
+	// 		LogLevel:      logger.Info,
+	// 		Colorful:      true,
+	// 	},
+	// )
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}

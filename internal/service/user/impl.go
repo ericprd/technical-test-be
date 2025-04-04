@@ -6,6 +6,7 @@ import (
 	redisrepo "github.com/ericprd/technical-test/internal/accessor/redis"
 	userrepo "github.com/ericprd/technical-test/internal/accessor/user"
 	walletrepo "github.com/ericprd/technical-test/internal/accessor/wallet"
+	"github.com/ericprd/technical-test/internal/domain/filter"
 	userdomain "github.com/ericprd/technical-test/internal/domain/user"
 )
 
@@ -19,7 +20,7 @@ type User interface {
 	Register(ctx context.Context, spec userdomain.RegisterSpec) (string, error)
 	Login(ctx context.Context, spec userdomain.LoginSpec) (string, error)
 	Logout(ctx context.Context, token string) error
-	GetAllUser() ([]userdomain.Profile, error)
+	GetAllUser(f filter.FilterSpec) ([]userdomain.Profile, error)
 	GetUser(id string) (*userdomain.Profile, error)
 }
 
