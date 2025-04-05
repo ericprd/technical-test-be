@@ -20,7 +20,7 @@ func Update(
 	walletSvc walletsvc.Wallet,
 	middlewareSvc middlewaresvc.Middleware,
 ) {
-	router.With(middlewareSvc.Authorize()).Post("/wallet/update", func(w http.ResponseWriter, r *http.Request) {
+	router.With(middlewareSvc.Authorize()).Put("/wallet/update-balance", func(w http.ResponseWriter, r *http.Request) {
 		token, err := authutil.GetTokenHeader(r)
 		if err != nil {
 			response.ErrorResponse(w, err.Error(), "UNAUTHORIZED", http.StatusUnauthorized)

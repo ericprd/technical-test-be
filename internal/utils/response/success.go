@@ -8,8 +8,8 @@ import (
 
 func SuccessResponse(w http.ResponseWriter, message string, data any, statusCode int) {
 	response := Response{
-		Message: message,
-		Data:    data,
+		Type: message,
+		Data: data,
 	}
 
 	w.Header().Set("Content-Type", "application/json")

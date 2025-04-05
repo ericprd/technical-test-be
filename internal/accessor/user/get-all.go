@@ -23,11 +23,11 @@ func (i *impl) GetAllUser(f filter.FilterSpec) ([]userdomain.Profile, error) {
 		q = q.Joins("LEFT JOIN bank_accounts ON bank_accounts.user_id = users.id")
 
 		if f.AccountName != "" {
-			q = q.Where("bank_accounts.bank_name ILIKE ?", "%"+f.AccountName+"%")
+			q = q.Where("bank_accounts.account_name ILIKE ?", "%"+f.AccountName+"%")
 		}
 
 		if f.AccountNumber != "" {
-			q = q.Where("bank_accounts.account_number = ?", f.AccountNumber)
+			q = q.Where("bank_accounts.account_number ILIKE ?", "%"+f.AccountNumber+"%")
 		}
 	}
 
